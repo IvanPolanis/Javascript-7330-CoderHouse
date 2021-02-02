@@ -17,7 +17,7 @@ function addProduct(){
     }else if (x == 0){
         return showCart();
     }else{
-        x = parseInt(prompt("El valor ingresado no es válido, porfavor ingrese 1 o 2."));
+        x = parseInt(prompt("El valor ingresado no es válido, porfavor ingrese 1 o 0."));
     }}while(x != 1 | x != 0);
 }
 
