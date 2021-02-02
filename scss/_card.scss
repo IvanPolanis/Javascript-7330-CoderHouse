@@ -1,0 +1,38 @@
+.card-deck{
+    display: flex;
+    .card{
+        width: 300px;
+        height: 350px;
+        position: relative;
+        margin: 12px;
+        padding: 0;
+        transition: 0.5s;
+        .card-head{
+            width: 100%;
+            height: 80%;
+            .card-img-top{
+                height: 100%;
+                border-bottom: 2px solid #f1f1f1;
+                object-fit: cover;
+        }}
+        .card-product{
+            margin-top: 8px;
+            margin-left: 12px;
+            font-weight: 600;
+        }
+        .card-price{
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+        }
+        .card-button{
+            position: absolute;
+            bottom: 10px;
+            right: 12px;
+        }
+    }
+    .card:hover{
+        transform: scale(1.05);
+    }
+    
+}
