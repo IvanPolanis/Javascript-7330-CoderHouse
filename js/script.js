@@ -49,6 +49,6 @@ function printArr(){
     return list;
 }
 function showCart(){
-    console.log(`En su carrito tiene los siguientes productos:  ${printArr()}`)
+    alert(`En su carrito tiene los siguientes productos:  ${printArr()}`)
 }
 addProduct();
