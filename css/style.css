@@ -14,18 +14,18 @@
       .card-deck .card .card-head .card-img-top {
         height: 100%;
         border-bottom: 2px solid #f1f1f1;
-        object-fit: cover; }
+        object-fit: contain; }
     .card-deck .card .card-product {
       margin-top: 8px;
       margin-left: 12px;
       font-weight: 600; }
     .card-deck .card .card-price {
       position: absolute;
-      bottom: 12px;
+      bottom: 8px;
       left: 12px; }
     .card-deck .card .card-button {
       position: absolute;
-      bottom: 10px;
+      bottom: 6px;
       right: 12px; }
   .card-deck .card:hover {
     transform: scale(1.05); }

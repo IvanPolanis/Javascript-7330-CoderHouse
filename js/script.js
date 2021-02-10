@@ -23,9 +23,13 @@ const arrProducts = [product1,product2,product3];
 
 function getProduct(){
     let index = 0;
+    index = parseInt(prompt("¿Que producto desea agregar al carrito? 1 = I9, 2 = Ryzen 5, 3 = RTX3090"));
     do{
-        index = parseInt(prompt("¿Que producto desea agregar al carrito? 1 = I9, 2 = Ryzen 5, 3 = RTX3090"));
-    }while(index < 0 | index > 3);
+        if  (index < 1 | index > 3) {
+            alert("El número ingresado no es válido.")
+            index = parseInt(prompt("¿Que producto desea agregar al carrito? 1 = I9, 2 = Ryzen 5, 3 = RTX3090"));
+        }
+    }while(index < 1 | index > 3);
     const searchProduct = arrProducts.find(product => product.id == index);
     productList.push(searchProduct);
 }
