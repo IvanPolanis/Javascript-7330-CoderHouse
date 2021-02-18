@@ -55,4 +55,23 @@ function printArr(){
 function showCart(){
     alert(`En su carrito tiene los siguientes productos:  ${printArr()}`)
 }
+function newProduct(){
+    let product = new Product(4, prompt("Ingrese el nombre del producto: "), parseFloat(prompt("Ingrese el precio del producto: ")),prompt("Ingrese una descripción: "), parseInt(prompt("Ingrese el stock: ")) )
+    let container = document.createElement("div");
+    let elementplace = document.getElementById("card-deck");
+    container.className = "card col-md-4";
+    container.innerHTML = `
+                            <div class="card-head">
+                                <img src="assets/img/placeholder.png" alt="" class="card-img-top w-100">
+                            </div>
+                                <p class="card-product">${product.name}</p>
+                                <span class="card-price">$${product.price}</span>
+                                <div class="card-button">
+                                <button class="btn btn-light"><i class="gg-eye"></i></button>
+                                <button class="btn btn-primary">Agregar al carrito</button>
+                                </div>
+                            `
+    elementplace.appendChild(container)
+}
+newProduct();
 addProduct();
