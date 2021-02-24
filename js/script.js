@@ -1,12 +1,15 @@
 const productList = []
-
+const cart = [];
+var counter = 0, auxCounter = 3;
 class Product{
-    constructor(id,name,price,description,stock){
+    constructor(id,name,type,price,description,stock,img){
         this.id = id;
         this.name = name;
+        this.type = type;
         this.price = parseFloat(price);
         this.description = description;
         this.stock = parseInt(stock);
+        this.img = img;
     }
     addIVA(){
         this.price = this.price * 1.21;
@@ -15,63 +18,72 @@ class Product{
         this.stock -= 1;
     }
 }
-const product1 = new Product(1,"I9",375,"lorem ipsum...", 100);
-const product2 = new Product(2,"Ryzen 5",385,"lorem ipsum...", 100);
-const product3 = new Product(3, "RTX 3090",2500,"lorem ipsum...", 100);
-
-const arrProducts = [product1,product2,product3];
-
-function getProduct(){
-    let index = 0;
-    index = parseInt(prompt("¿Que producto desea agregar al carrito? 1 = I9, 2 = Ryzen 5, 3 = RTX3090"));
-    do{
-        if  (index < 1 | index > 3) {
-            alert("El número ingresado no es válido.")
-            index = parseInt(prompt("¿Que producto desea agregar al carrito? 1 = I9, 2 = Ryzen 5, 3 = RTX3090"));
-        }
-    }while(index < 1 | index > 3);
-    const searchProduct = arrProducts.find(product => product.id == index);
-    productList.push(searchProduct);
-}
-function addProduct(){
-    getProduct();
-    let x = parseInt(prompt("Ingrese 1 si desea seguir agregando productos o ingrese 0 para terminar."));
-    do{
-    if(x == 1) {
-        return addProduct();
-    }else if (x == 0){
-        return showCart();
-    }else{
-        x = parseInt(prompt("El valor ingresado no es válido, porfavor ingrese 1 o 0."));
-    }}while(x != 1 | x != 0);
-}
-function printArr(){
-    const list = []
-    for(const product of productList){
-        list.push(product.name)
+let buttonSM = document.getElementById("btn-SM");
+buttonSM.onclick = addCards;
+function addCards(){
+    for (counter; counter <auxCounter; counter++){
+        let product = new Product(data[counter].id,data[counter].name,data[counter].type,data[counter].price,data[counter].description,data[counter].stock,data[counter].img);
+        newProduct(data[counter]);
+        productList.push(product);
     }
-    return list;
-}
-function showCart(){
-    alert(`En su carrito tiene los siguientes productos:  ${printArr()}`)
-}
-function newProduct(){
-    let product = new Product(4, prompt("Ingrese el nombre del producto: "), parseFloat(prompt("Ingrese el precio del producto: ")),prompt("Ingrese una descripción: "), parseInt(prompt("Ingrese el stock: ")) )
+    auxCounter += 3;
+} 
+function newProduct(product){
     let container = document.createElement("div");
     let elementplace = document.getElementById("card-deck");
     container.className = "card col-md-4";
     container.innerHTML = `
                             <div class="card-head">
-                                <img src="assets/img/placeholder.png" alt="" class="card-img-top w-100">
+                                <img src="${product.img}" alt="" class="card-img-top w-100">
                             </div>
                                 <p class="card-product">${product.name}</p>
                                 <span class="card-price">$${product.price}</span>
                                 <div class="card-button">
-                                <button class="btn btn-light"><i class="gg-eye"></i></button>
-                                <button class="btn btn-primary">Agregar al carrito</button>
+                                <button type="button" class="btn btn-light" data-toggle="modal" data-target="#product${product.id}"><i class="gg-eye"></i></button>
+                                <button id="${product.id}" class="btn btn-primary">Agregar al carrito</button>
                                 </div>
                             `
-    elementplace.appendChild(container)
+    elementplace.appendChild(container);
+    newModal(product);
+    let addBtn = document.getElementById(product.id);
+    addBtn.onclick = () =>{
+        cart.push(product);
+    }
 }
-newProduct();
-addProduct();
+function newModal(product){
+    let container = document.createElement("div");
+    let elementPlace = document.getElementById("card-deck");
+    container.className = "modal fade"
+    container.id = `product${product.id}`
+    container.tabIndex = `-1`
+    container.innerHTML= `
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modalProduct${product.id}">${product.name}</h5>
+                                        
+                                        
+                                        </button>
+                                        </div>
+                                    <div class="modal-body">
+                                        <img class="modal-img" src="${product.img}"></img>
+                                        <div class="modal-description">
+                                            <p>Nombre: ${product.name}</p>
+                                            <p>Precio: $${product.price}</p>
+                                            <p>Descripción: ${product.description}</p>
+
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                            `
+    elementPlace.appendChild(container);
+    document.getElementById(`product${product.id}`).setAttribute("role", `dialog`);
+    document.getElementById(`product${product.id}`).setAttribute("aria-labelledby", `modalProduct${product.id}`);
+    document.getElementById(`product${product.id}`).setAttribute("aria-hidden", `true`);
+
+}
+addCards();

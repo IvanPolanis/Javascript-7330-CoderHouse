@@ -30,6 +30,18 @@
   #card-deck .card:hover {
     transform: scale(1.05); }
 
+.modal-body {
+  display: flex; }
+  .modal-body .modal-img {
+    width: 40%;
+    height: 40%;
+    padding: 8px; }
+  .modal-body .modal-description {
+    padding: 8px; }
+    .modal-body .modal-description p {
+      font-weight: 500;
+      margin: 0.5em; }
+
 body {
   margin: 0; }
 
