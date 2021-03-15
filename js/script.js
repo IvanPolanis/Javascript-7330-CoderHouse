@@ -2,7 +2,7 @@
 const productList = []
 const cart = [];
 var counter = 0, auxCounter = 3;
-
+const jsonURL = "./data/data.json";
 /*Clase*/
 class Product{
     constructor(id,name,type,price,description,stock,img,qty){
@@ -21,13 +21,15 @@ class Product{
 }
 /*Botón ver más */
 $("#btn-SM").click(addCards);
+/*Success message*/
+$(".alert").hide();
 /*Funciones */
 
+/*Función que se encarga de cargar el localStorage y agregarlo al carrito. */
 function gettingLocalStorage(){
     let cartArray = localStorage.getItem("cart");
     if(cartArray != null){
         let aux = JSON.parse(cartArray);
-        console.log(typeof(aux))
         for (const i of aux){
             let product = new Product(i.id,i.name,i.type,i.price,i.description,i.stock,i.img,i.qty)
             cart.push(product);
@@ -35,6 +37,7 @@ function gettingLocalStorage(){
         }
     }
 }
+/*Función que crea los productos en el modal del carrito */
 function createCartModal(product){
     newElement(`#cartModalBody`,`<tr id="cartModalProduct${product.id}">
                                                     <td class="w-25">
@@ -46,13 +49,13 @@ function createCartModal(product){
                                                     <td>$${product.price * product.qty}</td>
                                                     <td>
                                                     <a href="#" class="btn btn-danger btn-sm btn-delete">
-                                                        <i class="fa fa-times"></i>
+                                                        <i class="gg-remove"></i>
                                                     </a>
                                                     </td>
                                                 </tr>`)
-  $(".btn-delete").click(() => deleteCartItem(product));
-
+    $(`#cartModalProduct${product.id}`).find(".btn-delete").click(() => deleteCartItem(product))
 }
+/*Función que actualiza el carrito */
 function refreshCartModal(product){
     let element = document.getElementById(`cartModalProduct${product.id}`);
     element.innerHTML= `  <td class="w-25">
@@ -64,20 +67,27 @@ function refreshCartModal(product){
                             <td>$${product.price * product.qty}</td>
                             <td>
                             <a href="#" class="btn btn-danger btn-sm btn-delete">
-                                <i class="fa fa-times"></i>
+                                <i class="gg-remove"></i>
                             </a>
                             </td>`
-    $(".btn-delete").click(() => deleteCartItem(product));
+                            $(`#cartModalProduct${product.id}`).find(".btn-delete").click(() => deleteCartItem(product))
 }
+/*Función que consigue la información de los producto y los asigna.*/
 function addCards(){
-    for (counter; counter <auxCounter; counter++){
-        let product = new Product(data[counter].id,data[counter].name,data[counter].type,data[counter].price,data[counter].description,data[counter].stock,data[counter].img);
-        newProduct(data[counter]);
-        productList.push(product);
-    }
-    auxCounter += 3;
+    $.getJSON(jsonURL,function (answer, status) {
+            if (status === "success") {
+                let data = answer;
+                for (counter; counter <auxCounter; counter++){
+                    let product = new Product(data[counter].id,data[counter].name,data[counter].type,data[counter].price,data[counter].description,data[counter].stock,data[counter].img);
+                    newProduct(data[counter]);
+                    productList.push(product);
+                }
+                auxCounter += 3;
+            }
+        });
+    
 }
-
+/*Función que crea las tarjetas de los productos. */
 function newProduct(product){
     newElement("#card-deck",`<div class="card col-md-4">
                                 <div class="card-head">
@@ -112,6 +122,7 @@ function newProduct(product){
                                     </div>
                                 </div>
                             </div>`);
+    /*Se le asigna funciones al botón.*/
     $(`#${product.id}`).click( function () {
             if (cart == "") {
                 product.qty = 1;
@@ -132,25 +143,31 @@ function newProduct(product){
                     }
                 };
             }
+            $(".alert")
+                .html(`${product.name} fue agregado correctamente al carrito.`)
+                .fadeIn(500)
+                .delay(1000)
+                .fadeOut(500);
             localStorage.setItem("cart",JSON.stringify(cart));
         });
-        
-        
     }
-
+/*Función que borra un item del carrito. */
 function deleteCartItem(product){
-    console.log(".")
     for(let i= 0;i<cart.length;i++){
+        console.log("a")
         if(cart[i].id == product.id){
-            console.log(product.id)
-            cart.splice(i,1)
+            cart.splice(i,1);
+            $(`#cartModalProduct${product.id}`).remove();
+            localStorage.setItem("cart",JSON.stringify(cart));
+            break;
         }
     }
 }
 function newElement(key,value){
     $(key).append(value);
 }
-/*Llamada a funciones*/
+
+/*Creación inicial del DOM*/
 gettingLocalStorage();
 addCards();
 

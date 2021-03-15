@@ -1,0 +1,9 @@
+.alert-container{
+  position: absolute;
+  .alert{
+    position: fixed;
+    bottom: 8px;
+    right: 12px;
+    width: 33%;
+  }
+}

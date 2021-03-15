@@ -1,4 +1,4 @@
-@import url("https://css.gg/css?=|eye|shopping-cart");
+@import url("https://css.gg/css?=|close-o|eye|remove-r|remove|shopping-cart");
 #card-deck {
   display: flex; }
   #card-deck .card {
@@ -41,6 +41,31 @@
     .modal-body .modal-description p {
       font-weight: 500;
       margin: 0.5em; }
+
+.table-image thead td, .table-image thead th {
+  border: 0;
+  color: #666;
+  font-size: 0.8rem; }
+
+.table-image td, .table-image th {
+  vertical-align: middle;
+  text-align: center; }
+  .table-image td.qty, .table-image th.qty {
+    max-width: 2rem; }
+
+.price {
+  margin-left: 1rem; }
+
+.modal-footer {
+  padding-top: 0rem; }
+
+.alert-container {
+  position: absolute; }
+  .alert-container .alert {
+    position: fixed;
+    bottom: 8px;
+    right: 12px;
+    width: 33%; }
 
 body {
   margin: 0; }
