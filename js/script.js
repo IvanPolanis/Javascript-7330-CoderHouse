@@ -23,6 +23,18 @@ class Product{
 $("#btn-SM").click(addCards);
 /*Success message*/
 $(".alert").hide();
+/*Buy Button*/
+$(".buy-btn").click(() =>{
+    if(cart[0] == undefined){
+        alert("Su carrito se encuentra vacio. Porfavor agregue productos para comprar.");
+    }else {
+        for(let i of cart){
+            deleteCartItem(i);
+        }
+        refreshPrice();
+        alert("Su compra ha sido procesada con exito.");
+    }
+});
 /*Funciones */
 
 /*Función que se encarga de cargar el localStorage y agregarlo al carrito. */
@@ -53,12 +65,15 @@ function createCartModal(product){
                                                     </a>
                                                     </td>
                                                 </tr>`)
-    $(`#cartModalProduct${product.id}`).find(".btn-delete").click(() => deleteCartItem(product))
+    $(`#cartModalProduct${product.id}`).find(".btn-delete").click(() => {
+        deleteCartItem(product);
+        refreshPrice();
+    });
+    refreshPrice();
 }
 /*Función que actualiza el carrito */
 function refreshCartModal(product){
-    let element = document.getElementById(`cartModalProduct${product.id}`);
-    element.innerHTML= `  <td class="w-25">
+    $(`#cartModalProduct${product.id}`).html(`  <td class="w-25">
                                 <img src="${product.img}" class="img-fluid img-thumbnail" alt="Sheep">
                             </td>
                             <td>${product.name}</td>
@@ -69,14 +84,26 @@ function refreshCartModal(product){
                             <a href="#" class="btn btn-danger btn-sm btn-delete">
                                 <i class="gg-remove"></i>
                             </a>
-                            </td>`
-                            $(`#cartModalProduct${product.id}`).find(".btn-delete").click(() => deleteCartItem(product))
+                            </td>`);
+    $(`#cartModalProduct${product.id}`).find(".btn-delete").click(() => {
+        deleteCartItem(product);
+        refreshPrice();
+    });
+    refreshPrice();
+}
+function refreshPrice(){
+    let price = 0;
+    for(let i of cart){
+        price += i.price * i.qty;
+        
+    }
+    $(".price").html(`Total: $${price}`);
 }
 /*Función que consigue la información de los producto y los asigna.*/
 function addCards(){
-    $.getJSON(jsonURL,function (answer, status) {
+    $.getJSON(jsonURL,function (response, status) {
             if (status === "success") {
-                let data = answer;
+                let data = response;
                 for (counter; counter <auxCounter; counter++){
                     let product = new Product(data[counter].id,data[counter].name,data[counter].type,data[counter].price,data[counter].description,data[counter].stock,data[counter].img);
                     newProduct(data[counter]);
@@ -89,7 +116,7 @@ function addCards(){
 }
 /*Función que crea las tarjetas de los productos. */
 function newProduct(product){
-    newElement("#card-deck",`<div class="card col-md-4">
+    newElement("#card-deck",`<div class="card col-md-4 ${product.type}">
                                 <div class="card-head">
                                     <img src="${product.img}" alt="" class="card-img-top w-100">
                                 </div>
@@ -144,7 +171,7 @@ function newProduct(product){
                 };
             }
             $(".alert")
-                .html(`${product.name} fue agregado correctamente al carrito.`)
+                .html(`El producto fue agregado correctamente al carrito.`)
                 .fadeIn(500)
                 .delay(1000)
                 .fadeOut(500);
@@ -154,7 +181,6 @@ function newProduct(product){
 /*Función que borra un item del carrito. */
 function deleteCartItem(product){
     for(let i= 0;i<cart.length;i++){
-        console.log("a")
         if(cart[i].id == product.id){
             cart.splice(i,1);
             $(`#cartModalProduct${product.id}`).remove();
@@ -168,6 +194,7 @@ function newElement(key,value){
 }
 
 /*Creación inicial del DOM*/
-gettingLocalStorage();
-addCards();
-
+$("document").ready(() => {
+    gettingLocalStorage();
+    addCards();
+});

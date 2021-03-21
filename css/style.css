@@ -27,11 +27,14 @@
       position: absolute;
       bottom: 6px;
       right: 12px; }
+    #card-deck .card .btn {
+      font-size: 0.70rem; }
   #card-deck .card:hover {
     transform: scale(1.05); }
 
 .modal-body {
-  display: flex; }
+  display: flex;
+  padding-bottom: 6px; }
   .modal-body .modal-img {
     width: 40%;
     height: 40%;
@@ -42,10 +45,17 @@
       font-weight: 500;
       margin: 0.5em; }
 
+.table {
+  border: 0px;
+  margin-bottom: 0px; }
+  .table :not(caption) > * > * {
+    border-color: #dee2e6; }
+
 .table-image thead td, .table-image thead th {
-  border: 0;
+  border: 0px;
   color: #666;
-  font-size: 0.8rem; }
+  font-size: 0.8rem;
+  border-style: none; }
 
 .table-image td, .table-image th {
   vertical-align: middle;
@@ -54,18 +64,37 @@
     max-width: 2rem; }
 
 .price {
-  margin-left: 1rem; }
+  margin-left: 0rem;
+  margin-bottom: 0px; }
 
 .modal-footer {
   padding-top: 0rem; }
 
+td .btn-delete {
+  border-bottom-width: 0px !important;
+  border-color: #dc3545; }
+
+.price-div {
+  border-bottom: 1px solid #dee2e6;
+  margin: 12px;
+  margin-top: 0px; }
+
 .alert-container {
-  position: absolute; }
+  position: absolute;
+  z-index: 1; }
   .alert-container .alert {
     position: fixed;
     bottom: 8px;
     right: 12px;
-    width: 33%; }
+    width: 80%; }
+
+@media only screen and (min-width: 768px) {
+  .alert-container .alert {
+    width: 50%; } }
+
+@media only screen and (min-width: 1280px) {
+  .alert-container .alert {
+    width: 33%; } }
 
 body {
   margin: 0; }

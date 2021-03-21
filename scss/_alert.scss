@@ -1,9 +1,24 @@
 .alert-container{
   position: absolute;
+  z-index: 1;
   .alert{
     position: fixed;
     bottom: 8px;
     right: 12px;
-    width: 33%;
+    width: 80%;
+  }
+}
+@media only screen and (min-width:768px){
+  .alert-container{
+    .alert{
+      width: 50%;
+    }
+  }
+}
+@media only screen and (min-width:1280px){
+  .alert-container{
+    .alert{
+      width: 33%;
+    }
   }
 }

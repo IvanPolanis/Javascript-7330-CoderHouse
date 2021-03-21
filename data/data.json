@@ -45,11 +45,38 @@
         "qty": 0
     },{
         "id": 6,
-        "name": "Zotac RTX 3090",
-        "type": "gpu",
-        "price": 2500,
+        "name": "HyperX 8GB DDR4 3200Mhz ",
+        "type": "ram",
+        "price": 50,
         "description": "Lorem ipsum...",
         "stock": 100,
-        "img": "assets/img/zotac_rtx_3090_1.jpg",
+        "img": "assets/img/hyperx-fury-ddr4.jpg",
+        "qty": 0
+    },{
+        "id": 7,
+        "name": "Vengeance DDR4 3200 16GB",
+        "type": "ram",
+        "price": 110,
+        "description": "Lorem ipsum...",
+        "stock": 100,
+        "img": "assets/img/corsair-vengeance-rgb-pro-optimizado-amd-ddr4-3200.jpg",
+        "qty": 0
+    },{
+        "id": 8,
+        "name": "Kingston A400 SSD 480GB",
+        "type": "ssd",
+        "price": 50,
+        "description": "Lorem ipsum...",
+        "stock": 100,
+        "img": "assets/img/kingston-a400-ssd-480gb.jpg",
+        "qty": 0
+    },{
+        "id": 9,
+        "name": "Seagate BarraCuda 3.5' 1TB SATA3",
+        "type": "hdd",
+        "price": 50,
+        "description": "Lorem ipsum...",
+        "stock": 100,
+        "img": "assets/img/seagate-barracuda-3.5-1tb-sata3.jpg",
         "qty": 0
     }]
